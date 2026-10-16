@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Integrations · unfr0zen</title>
+    <meta name="description" content="Set up unfr0zen's MQTT, Matter, Thread, Zigbee and Doom on a Nest Learning Thermostat, from the app or the command line.">
+    <link rel="icon" href="/assets/logo.png">
+    <link rel="preconnect" href="https://rsms.me">
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header>
+    <div class="wrap">
+        <nav>
+            <a href="/">/</a>
+            <a href="/download/">download</a>
+            <a href="/integrations/" class="active">integrations</a>
+            <a href="https://github.com/unfr0zen" target="_blank" rel="noopener">github</a>
+        </nav>
+        <a href="/download/" class="btn btn-dark btn-small">Download</a>
+    </div>
+</header>
+
+<main>
+    <section class="doc">
+        <div class="wrap">
+            <h1>Integrations</h1>
+            <p>Integrations are chosen when you install. Tick them in the app, or pass them as options to the <code>unfr0zen</code> command-line tool. To add or remove one later, run the install again with the new selection. MQTT, Matter, Zigbee and Doom are served by nestlocal, which any of them installs on the thermostat.</p>
+            <p>MQTT and Matter reach your network over Wi-Fi: join it from the thermostat's own menu (Settings → Network). That network doesn't need internet access.</p>
+            <ul class="toc">
+                <li><a href="#menu">UNFR0ZEN menu</a></li>
+                <li><a href="#mqtt">MQTT</a></li>
+                <li><a href="#matter">Matter</a></li>
+                <li><a href="#thread">Matter over Thread</a></li>
+                <li><a href="#zigbee">Zigbee</a></li>
+                <li><a href="#doom">Doom</a></li>
+                <li><a href="#options">Other options</a></li>
+                <li><a href="#backup">Backup &amp; restore</a></li>
+            </ul>
+
+            <h2 id="menu"><svg viewBox="0 0 24 24" aria-hidden="true"><line x1="21" x2="14" y1="4" y2="4"/><line x1="10" x2="3" y1="4" y2="4"/><line x1="21" x2="12" y1="12" y2="12"/><line x1="8" x2="3" y1="12" y2="12"/><line x1="21" x2="16" y1="20" y2="20"/><line x1="12" x2="3" y1="20" y2="20"/><line x1="14" x2="14" y1="2" y2="6"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="16" x2="16" y1="18" y2="22"/></svg>UNFR0ZEN menu</h2>
+            <p>The install replaces the thermostat's <b>NEST APP</b> settings entry with <b>UNFR0ZEN</b>. It shows the Matter QR and pairing code with <b>Enable pairing</b>, Zigbee pairing with a 30-second countdown, and Doom. An integration's entry appears only when it was installed.</p>
+            <p>The original <code>nlclient</code> is saved once on the unit, at <code>/etc/unfr0zen/nlclient.original</code>, and kept across later installs. No prebuilt binary patches are used: the app links the menu into the unit's own <code>nlclient</code>. Supported versions and undo: <a href="https://github.com/unfr0zen/unfr0zen/blob/main/nlclient/README.md" target="_blank" rel="noopener">nlclient/README.md</a>.</p>
+
+            <h2 id="mqtt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9"/><path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5"/><circle cx="12" cy="12" r="2"/><path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5"/><path d="M19.1 4.9C23 8.8 23 15.1 19.1 19"/></svg>MQTT</h2>
+            <div class="table-scroll">
+                <table>
+                    <thead><tr><th>App</th><th>CLI</th></tr></thead>
+                    <tbody>
+                        <tr><td><b>Relay to MQTT broker</b>, Broker <code>host[:port]</code></td><td><code>--mqtt host[:port]</code></td></tr>
+                        <tr><td>User, Password</td><td><code>--mqtt-user</code>, <code>--mqtt-password</code></td></tr>
+                        <tr><td>TLS, CA certificate</td><td><code>--mqtt-tls</code>, <code>--mqtt-ca FILE</code></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p>The port defaults to 1883, or 8883 with TLS. The thermostat shows up in Home Assistant through MQTT discovery: modes, setpoints and range, what it is running, eco and the eco temperatures, humidity and target humidity, outdoor temperature, occupancy, °C/°F, backplate temperature, battery, fan and its timer, Auto-Schedule, Home/Away Assist, Sunblock, Early-On, the indicators (Leaf, Early-On and Sunblock active, safety shutoff, filter), time to temperature, IP address, Wi-Fi signal and clearing the schedule.</p>
+            <p>Two Home Assistant blueprints feed the thermostat what it used to get from Google:</p>
+            <ul>
+                <li><a href="https://github.com/unfr0zen/unfr0zen/blob/main/home-assistant/weather.yaml" target="_blank" rel="noopener">Nest weather</a>: outdoor temperature, humidity, conditions and forecast, every 15 minutes.</li>
+                <li><a href="https://github.com/unfr0zen/unfr0zen/blob/main/home-assistant/time.yaml" target="_blank" rel="noopener">Nest clock</a>: answers the thermostat's time requests on a network with no NTP server.</li>
+            </ul>
+
+            <h2 id="matter"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Matter</h2>
+            <div class="table-scroll">
+                <table>
+                    <thead><tr><th>App</th><th>CLI</th></tr></thead>
+                    <tbody>
+                        <tr><td><b>Matter</b></td><td><code>--matter</code></td></tr>
+                        <tr><td>Pairing code</td><td><code>--matter-code CODE</code></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p>Works alone or beside MQTT. The thermostat must already be on Wi-Fi. It is commissioned with its 11-digit pairing code, <code>0347-100-5534</code> unless you set another. The first pairing window opens by itself; after that, open <b>UNFR0ZEN → Matter → Enable pairing</b>.</p>
+            <ol>
+                <li>Home Assistant: Settings → Devices &amp; services → Add integration → Matter.</li>
+                <li>Add the device with the pairing code, or scan the QR shown on the thermostat.</li>
+            </ol>
+            <div class="note">nestlocal uses the Matter test vendor ID (0xFFF1) and test attestation, so controllers treat it as uncertified. Home Assistant's Matter server accepts it only with its test-net DCL option on.</div>
+            <p>Home Assistant shows the thermostat (modes, setpoints and range, what it is running, eco as a preset, humidity, outdoor temperature), occupancy, °C/°F, backplate temperature, battery, fan and its timer, and switches for Auto-Schedule, Home/Away Assist, Sunblock, Early-On and the eco limits. The rest of the MQTT entities are MQTT-only.</p>
+            <p><b>Bluetooth commissioning.</b> On units with the supported DA14580 Bluetooth firmware, Matter also commissions over Bluetooth, automatically. The stock radio image stays unchanged: nestlocal loads the unit's own firmware into radio RAM. Bluetooth advertises only while the pairing window is open; day-to-day traffic goes over Wi-Fi or Thread. Units with missing or unsupported Bluetooth firmware pair over IP.</p>
+            <p><b>Sleep.</b> The thermostat sleeps between Matter commands: unicast UDP to port 5540 wakes it. It stays awake while commissioning, and on firmware that rejects the wake filters. Multicast discovery and subscription deadlines don't wake it yet. This is experimental.</p>
+
+            <h2 id="thread"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="4.5" r="2.5"/><path d="m10.2 6.3-3.9 3.9"/><circle cx="4.5" cy="12" r="2.5"/><path d="M7 12h10"/><circle cx="19.5" cy="12" r="2.5"/><path d="m13.8 17.7 3.9-3.9"/><circle cx="12" cy="19.5" r="2.5"/></svg>Matter over Thread</h2>
+            <div class="table-scroll">
+                <table>
+                    <thead><tr><th>App</th><th>CLI</th></tr></thead>
+                    <tbody>
+                        <tr><td><b>Thread support</b>, under Matter</td><td><code>--matter-thread</code></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p>The thermostat joins a Thread mesh as a router and serves Matter over it, beside Wi-Fi. The commissioner supplies the Thread credentials. It takes over the radio from Nest's Thread firmware (Heat Link), so it can't be combined with Zigbee. Experimental. Design and device details: <a href="https://github.com/unfr0zen/unfr0zen/blob/main/radio/thread/README.md" target="_blank" rel="noopener">radio/thread/README.md</a>.</p>
+
+            <h2 id="zigbee"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/></svg>Zigbee</h2>
+            <div class="table-scroll">
+                <table>
+                    <thead><tr><th>App</th><th>CLI</th></tr></thead>
+                    <tbody>
+                        <tr><td><b>Zigbee</b></td><td><code>--zigbee</code></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p>The thermostat joins your Zigbee network as a router through its own 802.15.4 radio, alone or beside MQTT and Matter. On first start nestlocal writes its own radio firmware in place of Nest's Thread firmware (Heat Link). Installing again without Zigbee puts Nest's firmware back.</p>
+            <ol>
+                <li>Zigbee2MQTT 2.12.1 or later: copy <a href="https://github.com/unfr0zen/unfr0zen/blob/main/zigbee2mqtt/nest-learning-thermostat.mjs" target="_blank" rel="noopener"><code>nest-learning-thermostat.mjs</code></a> to <code>data/external_converters/</code> and restart Zigbee2MQTT.</li>
+                <li>Permit join on the coordinator. The thermostat joins the strongest network permitting joins, on any channel, and keeps it across restarts.</li>
+                <li>After updating the converter, Reconfigure the device in Zigbee2MQTT so Home Assistant gets the new entities.</li>
+            </ol>
+            <p>Home Assistant gets the MQTT entities under the same names, except the IP address, Wi-Fi signal and the blueprints.</p>
+            <p>To move to another network, open <b>UNFR0ZEN → Zigbee → Enable pairing</b> and confirm. The thermostat beeps, leaves the network, forgets its credentials and looks for one permitting joins for 30 seconds. After a timeout it stays off any network until pairing is enabled again or nestlocal restarts.</p>
+            <p>The thermostat still sleeps: the radio keeps routing, and a message for the unit wakes it. The wake comes from a small kernel module built for each gen3 kernel Nest published (5.8 to 6.1). On any other kernel, a message waits until the unit wakes for something else.</p>
+
+            <h2 id="doom"><svg viewBox="0 0 24 24" aria-hidden="true"><line x1="6" x2="10" y1="11" y2="11"/><line x1="8" x2="8" y1="9" y2="13"/><line x1="15" x2="15.01" y1="12" y2="12"/><line x1="18" x2="18.01" y1="10" y2="10"/><path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z"/></svg>Doom</h2>
+            <div class="table-scroll">
+                <table>
+                    <thead><tr><th>App</th><th>CLI</th></tr></thead>
+                    <tbody>
+                        <tr><td>Not available</td><td><code>--doom</code></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p>Installs Doom with the shareware episode (DOOM1.WAD v1.9, included). Start it from <b>UNFR0ZEN → Doom</b>.</p>
+            <ul>
+                <li>You walk forward all along. Turn the ring to steer, press it to fire. Doors and switches open as you walk into them.</li>
+                <li>In menus, the ring moves and a press selects.</li>
+                <li>Hold the ring for 3 seconds to quit back to the thermostat.</li>
+                <li>Sound comes from the piezo: the PC speaker effects and each song's highest note.</li>
+            </ul>
+            <div class="note">While Doom runs the thermostat does not control the heating or cooling.</div>
+
+            <h2 id="options"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>Other options</h2>
+            <div class="table-scroll">
+                <table>
+                    <thead><tr><th>App</th><th>CLI</th><th>What it does</th></tr></thead>
+                    <tbody>
+                        <tr><td>Block Nest and Google servers</td><td><code>--block-cloud</code></td><td>Resolves Nest's and Google's servers to nowhere. Turns on the custom NTP server.</td></tr>
+                        <tr><td>Custom NTP server</td><td><code>--ntp-server [HOST]</code></td><td>Syncs time from HOST instead of time.nest.com (default pool.ntp.org).</td></tr>
+                        <tr><td>SSH server (root login)</td><td><code>--ssh</code></td><td>Runs an SSH server on the unit.</td></tr>
+                        <tr><td>USB root shell</td><td><code>--usb-shell</code></td><td>Root shell on the unit's USB serial port.</td></tr>
+                        <tr><td>Root password</td><td><code>--root-password</code></td><td>For SSH and the USB shell (default <code>unfr0zen</code>).</td></tr>
+                        <tr><td>Backplate simulator</td><td><code>--backplate-sim</code></td><td>1H1C with a simulated temperature, for testing off the wall.</td></tr>
+                        <tr><td>Not available</td><td><code>--dry-run</code></td><td>Lists the changes, writes nothing, boots the unit unchanged.</td></tr>
+                        <tr><td>Not available</td><td><code>--backup</code></td><td>Saves the original root volume before patching.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p>Every CLI option: <code>unfr0zen --help</code>.</p>
+
+            <h2 id="backup"><svg viewBox="0 0 24 24" aria-hidden="true"><line x1="22" x2="2" y1="12" y2="12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/><line x1="6" x2="6.01" y1="16" y2="16"/><line x1="10" x2="10.01" y1="16" y2="16"/></svg>Backup &amp; restore</h2>
+            <div class="table-scroll">
+                <table>
+                    <thead><tr><th>App</th><th>CLI</th></tr></thead>
+                    <tbody>
+                        <tr><td>Back up NAND</td><td><code>unfr0zen backup [OUT]</code></td></tr>
+                        <tr><td>Not available</td><td><code>unfr0zen verify IMAGE</code></td></tr>
+                        <tr><td>Restore NAND</td><td><code>unfr0zen restore IMAGE</code></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p>Backs up the whole 512 MiB NAND as an image, checked with a second read, with a <code>.sha256</code> beside it. Nothing is written to the NAND during a backup, and an interrupted backup resumes. Restore writes a verified image back and asks first.</p>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="wrap">
+        <span>unfr0zen is not affiliated with Google or Nest.</span>
+        <a href="https://github.com/unfr0zen" target="_blank" rel="noopener">github.com/unfr0zen</a>
+    </div>
+</footer>
+</body>
+</html>

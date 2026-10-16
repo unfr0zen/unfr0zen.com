@@ -19,6 +19,7 @@
         <nav>
             <a href="/" class="active">/</a>
             <a href="/download/">download</a>
+            <a href="/integrations/">integrations</a>
             <a href="https://github.com/unfr0zen" target="_blank" rel="noopener">github</a>
         </nav>
         <a href="/download/" class="btn btn-dark btn-small">Download</a>
@@ -41,16 +42,11 @@
                 </div>
                 <div class="quicklinks">
                     <a class="link" href="https://github.com/unfr0zen/unfr0zen/releases" target="_blank" rel="noopener">→ What's new</a>
+                    <a class="link" href="/integrations/">→ Integrations</a>
                     <a class="link" href="#devices">→ Supported thermostats</a>
                 </div>
             </div>
-            <div class="dial" aria-hidden="true">
-                <div class="dial-face">
-                    <img src="/assets/logo.png" alt="">
-                    <div class="temp">21</div>
-                    <div class="label">UNFR0ZEN</div>
-                </div>
-            </div>
+            <img class="screenshot" src="/assets/app.png" width="552" height="732" alt="The unfr0zen app on macOS">
         </div>
     </div>
 
@@ -58,39 +54,39 @@
         <div class="wrap">
             <div class="grid">
                 <div class="card">
-                    <h3>No cloud</h3>
+                    <h3><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m2 2 20 20"/><path d="M5.782 5.782A7 7 0 0 0 9 19h8.5a4.5 4.5 0 0 0 1.307-.193"/><path d="M21.532 16.5A4.5 4.5 0 0 0 17.5 10h-1.79A7.008 7.008 0 0 0 10 5.07"/></svg>No cloud</h3>
                     <p>No Google account, no internet needed. The thermostat talks to your own network only, and the Wi-Fi it joins doesn't need internet access.</p>
                 </div>
                 <div class="card">
-                    <h3>MQTT</h3>
+                    <h3><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9"/><path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5"/><circle cx="12" cy="12" r="2"/><path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5"/><path d="M19.1 4.9C23 8.8 23 15.1 19.1 19"/></svg>MQTT</h3>
                     <p>Relays the thermostat to your MQTT broker with Home Assistant's MQTT discovery: modes, setpoints, eco, humidity, fan, schedule and more.</p>
                 </div>
                 <div class="card">
-                    <h3>Matter</h3>
+                    <h3><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Matter</h3>
                     <p>Serves the unit as a Matter thermostat over Wi-Fi, commissioned with a pairing code or over Bluetooth on supported units. Thread support is experimental.</p>
                 </div>
                 <div class="card">
-                    <h3>Zigbee</h3>
+                    <h3><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/></svg>Zigbee</h3>
                     <p>Joins your Zigbee2MQTT network as a router through the thermostat's own 802.15.4 radio, and still sleeps between messages.</p>
                 </div>
                 <div class="card">
-                    <h3>On-device settings</h3>
+                    <h3><svg viewBox="0 0 24 24" aria-hidden="true"><line x1="21" x2="14" y1="4" y2="4"/><line x1="10" x2="3" y1="4" y2="4"/><line x1="21" x2="12" y1="12" y2="12"/><line x1="8" x2="3" y1="12" y2="12"/><line x1="21" x2="16" y1="20" y2="20"/><line x1="12" x2="3" y1="20" y2="20"/><line x1="14" x2="14" y1="2" y2="6"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="16" x2="16" y1="18" y2="22"/></svg>On-device settings</h3>
                     <p>An UNFR0ZEN menu on the thermostat itself shows Matter pairing codes and QR, and handles Zigbee pairing. The original firmware is kept for undo.</p>
                 </div>
                 <div class="card">
-                    <h3>One app, every OS</h3>
+                    <h3><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>One app, every OS</h3>
                     <p>A single self-contained executable for Windows, macOS and Linux. Recovery firmware is embedded; plug in a data micro-USB cable and go.</p>
                 </div>
                 <div class="card">
-                    <h3>Backup &amp; restore</h3>
-                    <p>The CLI backs up, verifies and restores the thermostat's whole NAND as an image before you touch anything.</p>
+                    <h3><svg viewBox="0 0 24 24" aria-hidden="true"><line x1="22" x2="2" y1="12" y2="12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/><line x1="6" x2="6.01" y1="16" y2="16"/><line x1="10" x2="10.01" y1="16" y2="16"/></svg>Backup &amp; restore</h3>
+                    <p>The app and the CLI back up and restore the thermostat's whole NAND as an image before you touch anything.</p>
                 </div>
                 <div class="card">
-                    <h3>It runs Doom</h3>
+                    <h3><svg viewBox="0 0 24 24" aria-hidden="true"><line x1="6" x2="10" y1="11" y2="11"/><line x1="8" x2="8" y1="9" y2="13"/><line x1="15" x2="15.01" y1="12" y2="12"/><line x1="18" x2="18.01" y1="10" y2="10"/><path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z"/></svg>It runs Doom</h3>
                     <p>Obviously. Turn the ring to walk, press to fire. The shareware episode is included.</p>
                 </div>
                 <div class="card">
-                    <h3>Open source</h3>
+                    <h3><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>Open source</h3>
                     <p>The app, the recovery firmware, nestlocal and the radio firmware are all built from source. No prebuilt binary patches.</p>
                 </div>
             </div>
