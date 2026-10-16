@@ -47,8 +47,8 @@
     <section class="panel" id="panel-macos">
         <div class="wrap">
             <h2>macOS 13 or later</h2>
-            <p>One universal app for Intel and Apple Silicon.</p>
-            <div class="files" data-files="macos-universal"></div>
+            <p>The universal app runs on Intel and Apple Silicon; the single-architecture ones are half the size.</p>
+            <div class="files" data-files="macos-universal macos-arm64 macos-x86_64"></div>
             <ol>
                 <li>Unzip and open <code>unfr0zen.app</code>.</li>
                 <li>It isn't notarized, so macOS blocks the first launch. Allow it under System Settings → Privacy &amp; Security, or run:</li>
@@ -62,7 +62,7 @@
     <section class="panel" id="panel-windows">
         <div class="wrap">
             <h2>Windows 10 or later</h2>
-            <div class="files" data-files="windows-x86_64"></div>
+            <div class="files" data-files="windows-x86_64 windows-arm64"></div>
             <ol>
                 <li>Unzip and run <code>unfr0zen.exe</code>.</li>
                 <li>It isn't signed, so SmartScreen may warn you: More info, then Run anyway.</li>
@@ -74,7 +74,7 @@
     <section class="panel" id="panel-linux">
         <div class="wrap">
             <h2>Linux (glibc 2.28+)</h2>
-            <div class="files" data-files="linux-x86_64 linux-arm64"></div>
+            <div class="files" data-files="linux-x86_64 linux-arm64 linux-armhf linux-armel linux-x86 linux-riscv64"></div>
             <pre><code>tar xf unfr0zen-linux-*.tar.gz && ./unfr0zen</code></pre>
             <p>Run with arguments, the same executable is the command-line tool, for a terminal, SSH or a headless machine: <code>./unfr0zen --help</code>.</p>
             <h2>USB access (once)</h2>

@@ -4,9 +4,16 @@ const RELEASES = `https://github.com/${REPO}/releases/latest`;
 
 const LABELS = {
     "macos-universal": "↓ macOS (Universal)",
+    "macos-arm64": "↓ macOS (Apple Silicon)",
+    "macos-x86_64": "↓ macOS (Intel)",
     "windows-x86_64": "↓ Windows (x86_64)",
+    "windows-arm64": "↓ Windows (arm64)",
     "linux-x86_64": "↓ Linux (x86_64)",
     "linux-arm64": "↓ Linux (arm64)",
+    "linux-armhf": "↓ Linux (armhf)",
+    "linux-armel": "↓ Linux (armel)",
+    "linux-x86": "↓ Linux (x86)",
+    "linux-riscv64": "↓ Linux (riscv64)",
 };
 
 function detectOs() {
