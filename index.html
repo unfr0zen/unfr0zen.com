@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>unfr0zen</title>
+    <meta name="description" content="Free your Nest Learning Thermostat from Google's cloud. Local MQTT, Matter and Zigbee for Home Assistant, installed over USB.">
+    <meta property="og:title" content="unfr0zen">
+    <meta property="og:description" content="Free your Nest Learning Thermostat from Google's cloud.">
+    <meta property="og:image" content="https://unfr0zen.com/assets/logo.png">
+    <link rel="icon" href="/assets/logo.png">
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header>
+    <div class="wrap">
+        <nav>
+            <a href="/" class="active">/</a>
+            <a href="/download/">download</a>
+            <a href="https://github.com/unfr0zen" target="_blank" rel="noopener">github</a>
+        </nav>
+        <a href="/download/" class="btn btn-dark btn-small">Download</a>
+    </div>
+</header>
+
+<main>
+    <div class="hero">
+        <div class="wrap">
+            <div class="hero-text">
+                <div class="hero-title">
+                    <img src="/assets/logo.png" alt="">
+                    <h1>unfr0zen</h1>
+                </div>
+                <h2>Free your Nest Learning Thermostat from Google's cloud</h2>
+                <p>Local MQTT, Matter and Zigbee for Home Assistant. Installed over USB, no Google account, keeps working when the internet is down.</p>
+                <div class="buttons">
+                    <a href="/download/" class="btn btn-ice">↓ Download</a>
+                    <a href="https://github.com/unfr0zen" class="btn btn-dark" target="_blank" rel="noopener">View on GitHub ↗</a>
+                </div>
+                <div class="quicklinks">
+                    <a class="link" href="https://github.com/unfr0zen/unfr0zen/releases" target="_blank" rel="noopener">→ What's new</a>
+                    <a class="link" href="#devices">→ Supported thermostats</a>
+                </div>
+            </div>
+            <div class="dial" aria-hidden="true">
+                <div class="dial-face">
+                    <img src="/assets/logo.png" alt="">
+                    <div class="temp">21</div>
+                    <div class="label">UNFR0ZEN</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section>
+        <div class="wrap">
+            <div class="grid">
+                <div class="card">
+                    <h3>No cloud</h3>
+                    <p>No Google account, no internet needed. The thermostat talks to your own network only, and the Wi-Fi it joins doesn't need internet access.</p>
+                </div>
+                <div class="card">
+                    <h3>MQTT</h3>
+                    <p>Relays the thermostat to your MQTT broker with Home Assistant's MQTT discovery: modes, setpoints, eco, humidity, fan, schedule and more.</p>
+                </div>
+                <div class="card">
+                    <h3>Matter</h3>
+                    <p>Serves the unit as a Matter thermostat over Wi-Fi, commissioned with a pairing code or over Bluetooth on supported units. Thread support is experimental.</p>
+                </div>
+                <div class="card">
+                    <h3>Zigbee</h3>
+                    <p>Joins your Zigbee2MQTT network as a router through the thermostat's own 802.15.4 radio, and still sleeps between messages.</p>
+                </div>
+                <div class="card">
+                    <h3>On-device settings</h3>
+                    <p>An UNFR0ZEN menu on the thermostat itself shows Matter pairing codes and QR, and handles Zigbee pairing. The original firmware is kept for undo.</p>
+                </div>
+                <div class="card">
+                    <h3>One app, every OS</h3>
+                    <p>A single self-contained executable for Windows, macOS and Linux. Recovery firmware is embedded; plug in a data micro-USB cable and go.</p>
+                </div>
+                <div class="card">
+                    <h3>Backup &amp; restore</h3>
+                    <p>The CLI backs up, verifies and restores the thermostat's whole NAND as an image before you touch anything.</p>
+                </div>
+                <div class="card">
+                    <h3>It runs Doom</h3>
+                    <p>Obviously. Turn the ring to walk, press to fire. The shareware episode is included.</p>
+                </div>
+                <div class="card">
+                    <h3>Open source</h3>
+                    <p>The app, the recovery firmware, nestlocal and the radio firmware are all built from source. No prebuilt binary patches.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="devices">
+        <div class="wrap">
+            <h2>Supported thermostats</h2>
+            <div class="table-scroll">
+                <table>
+                    <thead>
+                        <tr><th>Thermostat</th><th>SoC</th><th>MQTT</th><th>Matter</th><th>Zigbee</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Nest Learning Thermostat, 3rd gen</td><td>i.MX6 SoloX</td><td>✓</td><td>✓</td><td>✓</td></tr>
+                        <tr><td>Nest Learning Thermostat, 2nd gen</td><td>TI AM3703</td><td>✓</td><td>✓</td><td>Untested</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="wrap">
+        <span>unfr0zen is not affiliated with Google or Nest.</span>
+        <a href="https://github.com/unfr0zen" target="_blank" rel="noopener">github.com/unfr0zen</a>
+    </div>
+</footer>
+</body>
+</html>
