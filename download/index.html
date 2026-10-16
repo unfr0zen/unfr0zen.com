@@ -54,6 +54,8 @@
                 <li>It isn't notarized, so macOS blocks the first launch. Allow it under System Settings → Privacy &amp; Security, or run:</li>
             </ol>
             <pre><code>xattr -dr com.apple.quarantine unfr0zen.app</code></pre>
+            <p>The command-line tool is the app's own executable, run with arguments:</p>
+            <pre><code>unfr0zen.app/Contents/MacOS/unfr0zen --help</code></pre>
         </div>
     </section>
 
@@ -62,7 +64,7 @@
             <h2>Windows 10 or later</h2>
             <div class="files" data-files="windows-x86_64"></div>
             <ol>
-                <li>Unzip and run <code>unfr0zen-gui.exe</code>.</li>
+                <li>Unzip and run <code>unfr0zen.exe</code>.</li>
                 <li>It isn't signed, so SmartScreen may warn you: More info, then Run anyway.</li>
             </ol>
             <div class="note">2nd gen thermostats: the boot ROM (<code>0451:d00e</code>) needs the WinUSB driver, bound once with <a href="https://zadig.akeo.ie" target="_blank" rel="noopener">Zadig</a>.</div>
@@ -73,7 +75,8 @@
         <div class="wrap">
             <h2>Linux (glibc 2.28+)</h2>
             <div class="files" data-files="linux-x86_64 linux-arm64"></div>
-            <pre><code>tar xf unfr0zen-linux-*.tar.gz && ./unfr0zen-gui</code></pre>
+            <pre><code>tar xf unfr0zen-linux-*.tar.gz && ./unfr0zen</code></pre>
+            <p>Run with arguments, the same executable is the command-line tool, for a terminal, SSH or a headless machine: <code>./unfr0zen --help</code>.</p>
             <h2>USB access (once)</h2>
             <p>Without this udev rule only root can open the thermostat. Reconnect the unit afterwards if it's already plugged in.</p>
             <pre><code>sudo tee /etc/udev/rules.d/70-unfr0zen.rules > /dev/null &lt;&lt;'EOF'
@@ -101,7 +104,7 @@ sudo udevadm control --reload-rules && sudo udevadm trigger</code></pre>
                 <li>For MQTT or Matter, the thermostat joins Wi-Fi from its own menu (Settings → Network). That network doesn't need internet access.</li>
                 <li>For Zigbee: Zigbee2MQTT 2.12.1 or later, with the <a href="https://github.com/unfr0zen/unfr0zen/tree/main/zigbee2mqtt" target="_blank" rel="noopener">unfr0zen converter</a>.</li>
             </ul>
-            <p><a class="link" href="https://github.com/unfr0zen/unfr0zen/releases" target="_blank" rel="noopener">→ All releases and the command-line tool</a></p>
+            <p><a class="link" href="https://github.com/unfr0zen/unfr0zen/releases" target="_blank" rel="noopener">→ All releases</a></p>
         </div>
     </section>
 </main>

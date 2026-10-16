@@ -27,7 +27,7 @@
     <section class="doc">
         <div class="wrap">
             <h1>Integrations</h1>
-            <p>Integrations are chosen when you install. Tick them in the app, or pass them as options to the <code>unfr0zen</code> command-line tool. To add or remove one later, run the install again with the new selection. MQTT, Matter, Zigbee and Doom are served by nestlocal, which any of them installs on the thermostat.</p>
+            <p>Integrations are chosen when you install. Tick them in the app, or pass them as options to the <code>unfr0zen</code> command-line tool: on Linux and macOS, the app's own executable run with arguments. Windows has the app only. To add or remove one later, run the install again with the new selection. MQTT, Matter, Zigbee and Doom are served by nestlocal, which any of them installs on the thermostat.</p>
             <p>MQTT and Matter reach your network over Wi-Fi: join it from the thermostat's own menu (Settings → Network). That network doesn't need internet access.</p>
             <ul class="toc">
                 <li><a href="#menu">UNFR0ZEN menu</a></li>
@@ -80,7 +80,7 @@
             <div class="note">nestlocal uses the Matter test vendor ID (0xFFF1) and test attestation, so controllers treat it as uncertified. Home Assistant's Matter server accepts it only with its test-net DCL option on.</div>
             <p>Home Assistant shows the thermostat (modes, setpoints and range, what it is running, eco as a preset, humidity, outdoor temperature), occupancy, °C/°F, backplate temperature, battery, fan and its timer, and switches for Auto-Schedule, Home/Away Assist, Sunblock, Early-On and the eco limits. The rest of the MQTT entities are MQTT-only.</p>
             <p><b>Bluetooth commissioning.</b> On units with the supported DA14580 Bluetooth firmware, Matter also commissions over Bluetooth, automatically. The stock radio image stays unchanged: nestlocal loads the unit's own firmware into radio RAM. Bluetooth advertises only while the pairing window is open; day-to-day traffic goes over Wi-Fi or Thread. Units with missing or unsupported Bluetooth firmware pair over IP.</p>
-            <p><b>Sleep.</b> The thermostat sleeps between Matter commands: unicast UDP to port 5540 wakes it. It stays awake while commissioning, and on firmware that rejects the wake filters. Multicast discovery and subscription deadlines don't wake it yet. This is experimental.</p>
+            <p><b>Sleep.</b> The thermostat sleeps between Matter commands: unicast UDP to port 5540 wakes it. It stays awake while commissioning, and on firmware that rejects the wake filters. Multicast discovery and subscription deadlines don't wake it yet. This is experimental. On the 2nd generation, Matter keeps the unit awake: its sleep daemon wakes only for TCP traffic.</p>
 
             <h2 id="thread"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="4.5" r="2.5"/><path d="m10.2 6.3-3.9 3.9"/><circle cx="4.5" cy="12" r="2.5"/><path d="M7 12h10"/><circle cx="19.5" cy="12" r="2.5"/><path d="m13.8 17.7 3.9-3.9"/><circle cx="12" cy="19.5" r="2.5"/></svg>Matter over Thread</h2>
             <div class="table-scroll">
@@ -91,7 +91,7 @@
                     </tbody>
                 </table>
             </div>
-            <p>The thermostat joins a Thread mesh as a router and serves Matter over it, beside Wi-Fi. The commissioner supplies the Thread credentials. It takes over the radio from Nest's Thread firmware (Heat Link), so it can't be combined with Zigbee. Experimental. Design and device details: <a href="https://github.com/unfr0zen/unfr0zen/blob/main/radio/thread/README.md" target="_blank" rel="noopener">radio/thread/README.md</a>.</p>
+            <p>The thermostat joins a Thread mesh as a router and serves Matter over it, beside Wi-Fi. The commissioner supplies the Thread credentials. It takes over the radio from Nest's Thread firmware (Heat Link), so it can't be combined with Zigbee. Experimental, and untested on a 2nd generation unit, whose radio holds one firmware at a time: nestlocal flashes a Thread image for it. Design and device details: <a href="https://github.com/unfr0zen/unfr0zen/blob/main/radio/thread/README.md" target="_blank" rel="noopener">radio/thread/README.md</a>.</p>
 
             <h2 id="zigbee"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/></svg>Zigbee</h2>
             <div class="table-scroll">
@@ -102,7 +102,7 @@
                     </tbody>
                 </table>
             </div>
-            <p>The thermostat joins your Zigbee network as a router through its own 802.15.4 radio, alone or beside MQTT and Matter. On first start nestlocal writes its own radio firmware in place of Nest's Thread firmware (Heat Link). Installing again without Zigbee puts Nest's firmware back.</p>
+            <p>The thermostat joins your Zigbee network as a router through its own 802.15.4 radio, alone or beside MQTT and Matter. On first start nestlocal writes its own radio firmware in place of Nest's Thread firmware (Heat Link). Installing again without Zigbee puts Nest's firmware back. On the 2nd generation, Zigbee is untested on a unit and transmits at Nest's -10 dBm limit.</p>
             <ol>
                 <li>Zigbee2MQTT 2.12.1 or later: copy <a href="https://github.com/unfr0zen/unfr0zen/blob/main/zigbee2mqtt/nest-learning-thermostat.mjs" target="_blank" rel="noopener"><code>nest-learning-thermostat.mjs</code></a> to <code>data/external_converters/</code> and restart Zigbee2MQTT.</li>
                 <li>Permit join on the coordinator. The thermostat joins the strongest network permitting joins, on any channel, and keeps it across restarts.</li>
@@ -137,12 +137,13 @@
                     <tbody>
                         <tr><td>Block Nest and Google servers</td><td><code>--block-cloud</code></td><td>Resolves Nest's and Google's servers to nowhere. Turns on the custom NTP server.</td></tr>
                         <tr><td>Custom NTP server</td><td><code>--ntp-server [HOST]</code></td><td>Syncs time from HOST instead of time.nest.com (default pool.ntp.org).</td></tr>
-                        <tr><td>SSH server (root login)</td><td><code>--ssh</code></td><td>Runs an SSH server on the unit.</td></tr>
-                        <tr><td>USB root shell</td><td><code>--usb-shell</code></td><td>Root shell on the unit's USB serial port.</td></tr>
+                        <tr><td>SSH server (root login)</td><td><code>--ssh</code></td><td>Runs an SSH server on the unit (dropbear on the 2nd generation, host keys kept in system-config).</td></tr>
+                        <tr><td>USB root shell</td><td><code>--usb-shell</code></td><td>Root shell on the unit's USB serial port. On the 2nd generation it installs a kernel with a USB serial port, booted ahead of the stock one, which stays as the fallback.</td></tr>
                         <tr><td>Root password</td><td><code>--root-password</code></td><td>For SSH and the USB shell (default <code>unfr0zen</code>).</td></tr>
                         <tr><td>Backplate simulator</td><td><code>--backplate-sim</code></td><td>1H1C with a simulated temperature, for testing off the wall.</td></tr>
                         <tr><td>Not available</td><td><code>--dry-run</code></td><td>Lists the changes, writes nothing, boots the unit unchanged.</td></tr>
                         <tr><td>Not available</td><td><code>--backup</code></td><td>Saves the original root volume before patching.</td></tr>
+                        <tr><td>Not available</td><td><code>--nand-image FILE</code></td><td>2nd generation: patches a raw NAND image (2112-byte pages) instead of a unit.</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -159,7 +160,7 @@
                     </tbody>
                 </table>
             </div>
-            <p>Backs up the whole 512 MiB NAND as an image, checked with a second read, with a <code>.sha256</code> beside it. Nothing is written to the NAND during a backup, and an interrupted backup resumes. Restore writes a verified image back and asks first.</p>
+            <p>Backs up the whole NAND as an image, checked with a second read, with a <code>.sha256</code> beside it: 512 MiB ECC-corrected on the 3rd generation, raw pages with their OOB on the 2nd. Nothing is written to the NAND during a backup, and an interrupted backup resumes. Restore writes a verified image back and asks first. On the 2nd generation, the image's factory-bad blocks must match the chip's, only blocks that differ are rewritten, and an interrupted restore is run again.</p>
         </div>
     </section>
 </main>
