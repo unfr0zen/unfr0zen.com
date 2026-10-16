@@ -20,7 +20,9 @@ body {
     margin: 0;
     background: var(--bg);
     color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, Inter, "Segoe UI", sans-serif;
+    font-family: InterVariable, Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    /* Slashed zero, so the 0 in unfr0zen doesn't read as an O. */
+    font-feature-settings: "zero";
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
 }
