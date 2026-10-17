@@ -98,12 +98,24 @@ sudo udevadm control --reload-rules && sudo udevadm trigger</code></pre>
 
     <section>
         <div class="wrap" style="max-width: 760px;">
-            <h2>Before you start</h2>
+            <h2>You'll need</h2>
             <ul>
-                <li>Connect the thermostat's display to the computer through the micro-USB port on its back, with a cable that carries data. A charge-only cable won't work.</li>
-                <li>For MQTT or Matter, the thermostat joins Wi-Fi from its own menu (Settings → Network). That network doesn't need internet access.</li>
+                <li>A Nest Learning Thermostat, 2nd or 3rd generation.</li>
+                <li>A micro-USB cable that carries data. A charge-only cable won't work.</li>
+                <li>For MQTT: an MQTT broker (for example the Mosquitto add-on) and Home Assistant's MQTT integration.</li>
+                <li>For Matter: Home Assistant's Matter integration.</li>
                 <li>For Zigbee: Zigbee2MQTT 2.12.1 or later, with the <a href="https://github.com/unfr0zen/unfr0zen/tree/main/zigbee2mqtt" target="_blank" rel="noopener">unfr0zen converter</a>.</li>
             </ul>
+            <h2>Install</h2>
+            <ol>
+                <li>Open unfr0zen and tick what you want: Relay to MQTT broker (<code>host</code> or <code>host:port</code>, with user, password and TLS if it needs them), Matter, Zigbee, or several. Optionally block Nest's and Google's servers, set an NTP server, and turn on SSH with a root password (<code>unfr0zen</code> by default).</li>
+                <li>Click Start.</li>
+                <li>Take the display off its base and connect the micro-USB port on its back to the computer.</li>
+                <li>When the app asks, hold the front button for 10 seconds.</li>
+                <li>Wait a few minutes until it's done, then put the display back on its base.</li>
+                <li>For MQTT or Matter, join the thermostat to Wi-Fi from its own menu (Settings → Network) if it isn't already. The network doesn't need internet access.</li>
+            </ol>
+            <p><a class="link" href="/integrations/">→ Set up Home Assistant, Matter and Zigbee</a></p>
             <p><a class="link" href="https://github.com/unfr0zen/unfr0zen/releases" target="_blank" rel="noopener">→ All releases</a></p>
         </div>
     </section>
@@ -112,6 +124,7 @@ sudo udevadm control --reload-rules && sudo udevadm trigger</code></pre>
 <footer>
     <div class="wrap">
         <span>unfr0zen is not affiliated with Google or Nest.</span>
+        <a href="https://ko-fi.com/willtm" target="_blank" rel="noopener">Buy me a coffee</a>
         <a href="https://github.com/unfr0zen" target="_blank" rel="noopener">github.com/unfr0zen</a>
     </div>
 </footer>

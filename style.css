@@ -437,6 +437,9 @@ footer a { color: var(--muted); }
 .doc li { margin: 6px 0; }
 .doc table { margin: 4px 0 12px; }
 
+.doc .badge { margin: 4px 0 20px; }
+.doc .badge img { display: block; height: 40px; }
+
 .toc {
     display: flex;
     flex-wrap: wrap;

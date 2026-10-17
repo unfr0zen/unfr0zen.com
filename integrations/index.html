@@ -55,12 +55,12 @@
                     </tbody>
                 </table>
             </div>
-            <p>The port defaults to 1883, or 8883 with TLS. The thermostat shows up in Home Assistant through MQTT discovery: modes, setpoints and range, what it is running, eco and the eco temperatures, humidity and target humidity, outdoor temperature, occupancy, °C/°F, backplate temperature, battery, fan and its timer, Auto-Schedule, Home/Away Assist, Sunblock, Early-On, the indicators (Leaf, Early-On and Sunblock active, safety shutoff, filter), time to temperature, IP address, Wi-Fi signal and clearing the schedule.</p>
-            <p>Two Home Assistant blueprints feed the thermostat what it used to get from Google:</p>
-            <ul>
-                <li><a href="https://github.com/unfr0zen/unfr0zen/blob/main/home-assistant/weather.yaml" target="_blank" rel="noopener">Nest weather</a>: outdoor temperature, humidity, conditions and forecast, every 15 minutes.</li>
-                <li><a href="https://github.com/unfr0zen/unfr0zen/blob/main/home-assistant/time.yaml" target="_blank" rel="noopener">Nest clock</a>: answers the thermostat's time requests on a network with no NTP server.</li>
-            </ul>
+            <p>Needs an MQTT broker (for example the Mosquitto add-on) and Home Assistant's MQTT integration. The port defaults to 1883, or 8883 with TLS. The thermostat shows up in Home Assistant through MQTT discovery: a climate entity with off, heat, cool, heat-cool, eco and fan modes, setpoints and range, what it is running, eco and the eco temperatures, humidity and target humidity, outdoor temperature, occupancy, °C/°F, backplate temperature, battery, fan and its timer, Auto-Schedule, Home/Away Assist, Sunblock, Early-On, the indicators (Leaf, Early-On and Sunblock active, safety shutoff, filter), time to temperature, IP address, Wi-Fi signal and clearing the schedule.</p>
+            <p>Two Home Assistant blueprints feed the thermostat what it used to get from Google. Both need MQTT.</p>
+            <p><b>Weather.</b> Sends the outdoor temperature and humidity, conditions and forecast, every 15 minutes. Import it, then create an automation from it and pick your thermostat, outdoor sensors and a weather entity. Temperatures must be in °C.</p>
+            <p class="badge"><a href="https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Funfr0zen%2Funfr0zen%2Fblob%2Fmain%2Fhome-assistant%2Fweather.yaml" target="_blank" rel="noopener"><img src="https://my.home-assistant.io/badges/blueprint_import.svg" alt="Import the weather blueprint"></a></p>
+            <p><b>Clock.</b> The thermostat sets its clock from an NTP server; on a network with no way out to one, this blueprint has Home Assistant answer its time requests instead. Import it, then create an automation from it. It has no settings and answers every thermostat.</p>
+            <p class="badge"><a href="https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Funfr0zen%2Funfr0zen%2Fblob%2Fmain%2Fhome-assistant%2Ftime.yaml" target="_blank" rel="noopener"><img src="https://my.home-assistant.io/badges/blueprint_import.svg" alt="Import the clock blueprint"></a></p>
 
             <h2 id="matter"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Matter</h2>
             <div class="table-scroll">
@@ -72,7 +72,7 @@
                     </tbody>
                 </table>
             </div>
-            <p>Works alone or beside MQTT. The thermostat must already be on Wi-Fi. It is commissioned with its 11-digit pairing code, <code>0347-100-5534</code> unless you set another. The first pairing window opens by itself; after that, open <b>UNFR0ZEN → Matter → Enable pairing</b>.</p>
+            <p>Works alone or beside MQTT. The thermostat must already be on Wi-Fi. It is commissioned with its 11-digit pairing code, <code>0347-100-5534</code> unless you set another. The first pairing window opens by itself; after that, open <b>UNFR0ZEN → Matter → Enable pairing</b>. To move the thermostat to another controller, enable pairing and add it there: once the new controller has added it, the previous one is removed.</p>
             <ol>
                 <li>Home Assistant: Settings → Devices &amp; services → Add integration → Matter.</li>
                 <li>Add the device with the pairing code, or scan the QR shown on the thermostat.</li>
@@ -168,6 +168,7 @@
 <footer>
     <div class="wrap">
         <span>unfr0zen is not affiliated with Google or Nest.</span>
+        <a href="https://ko-fi.com/willtm" target="_blank" rel="noopener">Buy me a coffee</a>
         <a href="https://github.com/unfr0zen" target="_blank" rel="noopener">github.com/unfr0zen</a>
     </div>
 </footer>
