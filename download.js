@@ -10,9 +10,6 @@ const LABELS = {
     "windows-arm64": "↓ Windows (arm64)",
     "linux-x86_64": "↓ Linux (x86_64)",
     "linux-arm64": "↓ Linux (arm64)",
-    "linux-armhf": "↓ Linux (armhf)",
-    "linux-armel": "↓ Linux (armel)",
-    "linux-x86": "↓ Linux (x86)",
     "linux-riscv64": "↓ Linux (riscv64)",
 };
 
