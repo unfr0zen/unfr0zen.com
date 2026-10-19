@@ -67,7 +67,7 @@
                 <li>Unzip and run <code>unfr0zen.exe</code>.</li>
                 <li>It isn't signed, so SmartScreen may warn you: More info, then Run anyway.</li>
             </ol>
-            <div class="note">2nd gen thermostats: the boot ROM (<code>0451:d00e</code>) needs the WinUSB driver, bound once with <a href="https://zadig.akeo.ie" target="_blank" rel="noopener">Zadig</a>.</div>
+            <div class="note">1st and 2nd gen thermostats: the boot ROM (<code>0451:d00e</code>) needs the WinUSB driver, bound once with <a href="https://zadig.akeo.ie" target="_blank" rel="noopener">Zadig</a>.</div>
         </div>
     </section>
 
@@ -88,8 +88,9 @@ ATTRS{idVendor}=="0525", ATTRS{idProduct}=="a4a7", TAG+="uaccess", ENV{ID_MM_DEV
 ATTRS{idVendor}=="0525", ATTRS{idProduct}=="b4a4", TAG+="uaccess", ENV{ID_MM_DEVICE_IGNORE}="1"
 ATTRS{idVendor}=="2464", ATTRS{idProduct}=="0030", TAG+="uaccess", ENV{ID_MM_DEVICE_IGNORE}="1"
 ATTRS{idVendor}=="2464", ATTRS{idProduct}=="0031", TAG+="uaccess", ENV{ID_MM_DEVICE_IGNORE}="1"
-# j49: OMAP boot ROM (and x-loader, the flasher), the Nest application's gadget
+# Diamond/j49: OMAP boot ROM (and x-loader, the flasher), each application's gadget
 ATTRS{idVendor}=="0451", ATTRS{idProduct}=="d00e", TAG+="uaccess", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTRS{idVendor}=="2464", ATTRS{idProduct}=="0001", TAG+="uaccess", ENV{ID_MM_DEVICE_IGNORE}="1"
 ATTRS{idVendor}=="2464", ATTRS{idProduct}=="0002", TAG+="uaccess", ENV{ID_MM_DEVICE_IGNORE}="1"
 EOF
 sudo udevadm control --reload-rules && sudo udevadm trigger</code></pre>
@@ -100,8 +101,8 @@ sudo udevadm control --reload-rules && sudo udevadm trigger</code></pre>
         <div class="wrap" style="max-width: 760px;">
             <h2>You'll need</h2>
             <ul>
-                <li>A Nest Learning Thermostat, 2nd or 3rd generation.</li>
-                <li>A micro-USB cable that carries data. A charge-only cable won't work.</li>
+                <li>A Nest Learning Thermostat, 2nd or 3rd generation, or a 1st generation Diamond for experimental recovery.</li>
+                <li>A USB data cable: mini-USB for 1st gen, micro-USB for 2nd and 3rd gen. A charge-only cable won't work.</li>
                 <li>For MQTT: an MQTT broker (for example the Mosquitto add-on) and Home Assistant's MQTT integration.</li>
                 <li>For Matter: Home Assistant's Matter integration.</li>
                 <li>For Zigbee: Zigbee2MQTT 2.12.1 or later, with the <a href="https://github.com/unfr0zen/unfr0zen/tree/main/integrations/zigbee2mqtt" target="_blank" rel="noopener">unfr0zen converter</a>.</li>
@@ -110,7 +111,7 @@ sudo udevadm control --reload-rules && sudo udevadm trigger</code></pre>
             <ol>
                 <li>Open unfr0zen and tick what you want: Relay to MQTT broker (<code>host</code> or <code>host:port</code>, with user, password and TLS if it needs them), Matter, Zigbee, or several. Optionally block Nest's and Google's servers, set an NTP server, and turn on SSH with a root password (<code>unfr0zen</code> by default).</li>
                 <li>Click Start.</li>
-                <li>Take the display off its base and connect the micro-USB port on its back to the computer.</li>
+                <li>Take the display off its base and connect its USB port to the computer. For 1st gen, select <b>1st gen Diamond</b> in the app or pass <code>--device diamond</code> in the CLI.</li>
                 <li>When the app asks, hold the front button for 10 seconds.</li>
                 <li>Wait a few minutes until it's done, then put the display back on its base.</li>
                 <li>For MQTT or Matter, join the thermostat to Wi-Fi from its own menu (Settings → Network) if it isn't already. The network doesn't need internet access.</li>
